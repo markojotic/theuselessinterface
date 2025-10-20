@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Click Me If You Can — The Useless Interface by Marko Jotic</title>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --btn: #2841DF;
+      --white: #FFFFFF;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      background: var(--bg);
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      user-select: none;
+    }
+    .hint {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      opacity: 0.7;
+      font-size: 14px;
+    }
+    .hint a {
+      color: #2841DF;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .hint a:hover {
+      text-decoration: underline;
+    }
+    #runaway {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--btn);
+      color: var(--white);
+      border: none;
+      padding: 14px 22px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 16px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+      cursor: pointer;
+      transition: transform 0.08s ease;
+      will-change: transform, left, top;
+    }
+    #runaway:active { transform: translate(-50%, -50%) scale(0.98); }
+  </style>
+</head>
+<body>
+  <div class="hint">Find more at <a href="https://theuselessinterface.com" target="_blank">The Useless Interface</a></div>
+  <button id="runaway">Click Me If You Can</button>
+
+  <script>
+    (function () {
+      const btn = document.getElementById('runaway');
+      let pos = { x: window.innerWidth / 2 - 80, y: window.innerHeight / 2 - 22 };
+      let btnSize = { w: 0, h: 0 };
+
+      function measure() {
+        const r = btn.getBoundingClientRect();
+        btnSize.w = r.width;
+        btnSize.h = r.height;
+      }
+
+      function setPos(x, y) {
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+        btn.style.transform = 'translate(0, 0)';
+      }
+
+      function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+      function randomBetween(min, max) { return Math.random() * (max - min) + min; }
+
+      function flee(mouseX, mouseY) {
+        const btnRect = btn.getBoundingClientRect();
+        const btnCenterX = btnRect.left + btnRect.width / 2;
+        const btnCenterY = btnRect.top + btnRect.height / 2;
+
+        const dx = mouseX - btnCenterX;
+        const dy = mouseY - btnCenterY;
+        const dist = Math.hypot(dx, dy);
+        const threshold = 160;
+
+        if (dist < threshold) {
+          const angle = Math.atan2(dy, dx);
+          const step = (threshold - dist) + 24;
+
+          let newX = pos.x - Math.cos(angle) * step * 1.6 + (Math.random() - 0.5) * 40;
+          let newY = pos.y - Math.sin(angle) * step * 1.6 + (Math.random() - 0.5) * 40;
+
+          const padding = 8;
+          const maxX = window.innerWidth - btnSize.w - padding;
+          const maxY = window.innerHeight - btnSize.h - padding;
+          const minX = padding;
+          const minY = padding;
+
+          if (newX <= minX || newX >= maxX || newY <= minY || newY >= maxY) {
+            newX = randomBetween(minX, maxX);
+            newY = randomBetween(minY, maxY);
+          } else {
+            newX = clamp(newX, minX, maxX);
+            newY = clamp(newY, minY, maxY);
+          }
+
+          pos.x = newX;
+          pos.y = newY;
+          setPos(pos.x, pos.y);
+        }
+      }
+
+      window.requestAnimationFrame(() => {
+        measure();
+        setPos(pos.x, pos.y);
+      });
+
+      window.addEventListener('resize', () => {
+        measure();
+        pos.x = clamp(pos.x, 8, window.innerWidth - btnSize.w - 8);
+        pos.y = clamp(pos.y, 8, window.innerHeight - btnSize.h - 8);
+        setPos(pos.x, pos.y);
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        flee(e.clientX, e.clientY);
+      }, { passive: true });
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Nice try! 😄');
+      });
+    })();
+  </script>
+</body>
+</html>

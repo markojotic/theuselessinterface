@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turn Off All Notificaitons — The Useless Interface by Marko Jotic</title>
+  <style>
+    :root {
+      --btn-color: #2841DF;
+      --white: #FFFFFF;
+      --toast-bg: #333;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #FFFFFF;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    }
+    .hint {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      opacity: 0.7;
+      font-size: 14px;
+    }
+    .hint a {
+      color: #2841DF;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .hint a:hover {
+      text-decoration: underline;
+    }
+    button {
+      background-color: var(--btn-color);
+      color: var(--white);
+      border: none;
+      padding: 14px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      transition: transform 0.1s ease;
+    }
+    button:hover {
+      transform: scale(1.03);
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--toast-bg);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      font-size: 15px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="hint">Find more at <a href="https://theuselessinterface.com" target="_blank">The Useless Interface</a></div>
+  <button id="offBtn">🔕 Turn off all notifications</button>
+  <div id="toast" class="toast">All notifications are now off.</div>
+
+  <script>
+    const button = document.getElementById('offBtn');
+    const toast = document.getElementById('toast');
+
+    button.addEventListener('click', () => {
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mirror Browser — The Useless Interface by Marko Jotic</title>
+  <style>
+    :root {
+      --blue: #2841DF;
+      --ink: #111;
+      --bg: #FFFFFF;
+      --muted: #666;
+      --border: #e5e5e5;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .hint {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      opacity: .7;
+      font-size: 14px;
+      z-index: 10;
+    }
+    .hint a { color: var(--blue); font-weight: 600; text-decoration: none; }
+    .hint a:hover { text-decoration: underline; }
+    header {
+      text-align: center;
+      padding: 56px 16px 24px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .bar {
+      max-width: 880px;
+      margin: 16px auto 0;
+      display: flex;
+      gap: 10px;
+      padding: 0 16px;
+    }
+    input[type=url] {
+      flex: 1;
+      font-size: 16px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      outline: none;
+    }
+    input[type=url]:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(40,65,223,.12);
+    }
+    button {
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover { opacity: .95; }
+    .wrap {
+      max-width: 1200px;
+      margin: 16px auto 28px;
+      padding: 0 16px 24px;
+    }
+    .viewer {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 60vh;
+      background: #fafafa;
+      display: none;
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    .viewer.show { opacity: 1; }
+    iframe {
+      width: 100%;
+      height: min(72vh, calc(100vh - 200px));
+      border: 0;
+      transform: scaleX(-1);
+      transform-origin: center center;
+      background: #fff;
+    }
+    .status {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      color: var(--muted);
+      gap: 8px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+    .status.show { opacity: 1; }
+    .error {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      color: #b00020;
+      font-weight: 600;
+      background: #fff;
+    }
+    .error.show { display: flex; }
+  </style>
+</head>
+<body>
+  <div class="hint">Find more at <a href="https://theuselessinterface.com" target="_blank" rel="noopener">The Useless Interface</a></div>
+
+  <header>
+    <h1>Mirror Browser</h1>
+    <div class="bar">
+      <input id="url" type="url" placeholder="https://example.com" spellcheck="false" />
+      <button id="go">Go</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="viewer" id="viewer">
+      <div class="status" id="status">Reflecting…</div>
+      <div class="error" id="error">The website is blocking access, try another website.</div>
+      <iframe id="frame"></iframe>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('url');
+    const btn = document.getElementById('go');
+    const frame = document.getElementById('frame');
+    const statusEl = document.getElementById('status');
+    const errEl = document.getElementById('error');
+    const viewer = document.getElementById('viewer');
+
+    function normalizeURL(value) {
+      if (!value) return '';
+      const v = value.trim();
+      if (/^https?:\/\//i.test(v)) return v;
+      if (/^\/.+/.test(v)) return location.origin + v;
+      return 'https://' + v;
+    }
+
+    function showStatus(show) {
+      statusEl.classList.toggle('show', !!show);
+      errEl.classList.remove('show');
+    }
+
+    function showError() {
+      statusEl.classList.remove('show');
+      errEl.classList.add('show');
+    }
+
+    function reflect() {
+      const url = normalizeURL(input.value);
+      if (!url) return;
+      viewer.style.display = 'block';
+      setTimeout(() => viewer.classList.add('show'), 10);
+      showStatus(true);
+
+      try { frame.removeAttribute('srcdoc'); } catch (e) {}
+      frame.src = url;
+
+      const timeout = 3500;
+      let done = false;
+
+      function success() {
+        if (done) return;
+        done = true;
+        showStatus(false);
+        try {
+          const doc = frame.contentDocument || frame.contentWindow.document;
+          if (doc && doc.documentElement) {
+            doc.documentElement.style.direction = 'rtl';
+            doc.documentElement.style.unicodeBidi = 'bidi-override';
+          }
+        } catch (e) {}
+      }
+
+      frame.onload = success;
+
+      setTimeout(() => {
+        if (done) return;
+        try {
+          const doc = frame.contentDocument;
+          const empty = !doc || !doc.body || doc.body.children.length === 0;
+          if (empty) { showError(); } else { success(); }
+        } catch (e) { success(); }
+      }, timeout);
+    }
+
+    btn.addEventListener('click', reflect);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') reflect(); });
+  </script>
+</body>
+</html>

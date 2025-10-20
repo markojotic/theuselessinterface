@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Loop — The Useless Interface by Marko Jotic</title>
+  <style>
+    :root {
+      --blue: #2841DF;
+      --ink: #111;
+      --text: #fff;
+      --bg: #fff;
+    }
+    body {
+      background: var(--bg);
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+    }
+    .hint {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      opacity: 0.8;
+      font-size: 14px;
+      color: var(--ink);
+    }
+    .hint a {
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .hint a:hover {
+      text-decoration: underline;
+    }
+    button {
+      background: var(--blue);
+      color: var(--text);
+      border: none;
+      border-radius: 10px;
+      padding: 16px 40px;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.25s ease;
+    }
+    button.animate {
+      transform: scale(1.08);
+    }
+    .timer {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="hint">Find more at <a href="https://theuselessinterface.com" target="_blank">The Useless Interface</a></div>
+  <button id="loopBtn"><span id="btnText">Save</span><span class="timer" id="timer">3s</span></button>
+
+  <script>
+    const button = document.getElementById('loopBtn');
+    const textEl = document.getElementById('btnText');
+    const timerEl = document.getElementById('timer');
+    const texts = ["Save", "Cancel", "Undo", "Retry", "Forget", "Update", "Exit", "Revert", "Restart"];
+    let i = 0;
+    let countdown = 3;
+
+    function updateTimer() {
+      timerEl.textContent = countdown + 's';
+      countdown--;
+      if (countdown < 0) {
+        countdown = 3;
+        i = (i + 1) % texts.length;
+        textEl.textContent = texts[i];
+
+        // Trigger subtle animation
+        button.classList.add('animate');
+        setTimeout(() => button.classList.remove('animate'), 250);
+      }
+    }
+
+    setInterval(updateTimer, 1000);
+  </script>
+</body>
+</html>

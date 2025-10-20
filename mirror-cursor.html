@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mirror Cursor — The Useless Interface by Marko Jotic</title>
+<style>
+  :root{--dot:#111;}
+  html,body{height:100%;margin:0;background:#ffffff;cursor:none;overflow:hidden}
+  .mirror-cursor{
+    position:fixed;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:var(--dot);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    box-shadow:0 0 0 4px rgba(0,0,0,0.06);
+    transition: transform 0.06s linear, left 0.06s linear, top 0.06s linear;
+    z-index:9999;
+  }
+  .hint{position:fixed;left:12px;top:12px;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;font-size:13px;color:#111;opacity:0.85}
+  .hint a{color:#2841DF;text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+  <div class="hint">Find more at <a href="https://theuselessinterface.com" target="_blank" rel="noopener">The Useless Interface</a></div>
+  <div id="cursor" class="mirror-cursor" aria-hidden="true"></div>
+
+<script>
+(() => {
+  const cursor = document.getElementById('cursor');
+
+  function setPos(x, y) {
+    cursor.style.left = x + 'px';
+    cursor.style.top = y + 'px';
+  }
+
+  function mirrorPoint(clientX, clientY) {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const mx = w - clientX;
+    const my = h - clientY;
+    return { x: mx, y: my };
+  }
+
+  window.addEventListener('mousemove', (e) => {
+    const m = mirrorPoint(e.clientX, e.clientY);
+    setPos(m.x, m.y);
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if(e.touches && e.touches.length) {
+      const t = e.touches[0];
+      const m = mirrorPoint(t.clientX, t.clientY);
+      setPos(m.x, m.y);
+    }
+  }, { passive: true });
+
+  // Keyboard arrow keys: move virtual pointer opposite of key direction
+  let virtualX = window.innerWidth / 2;
+  let virtualY = window.innerHeight / 2;
+  const step = 20;
+
+  function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+  window.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowLeft') virtualX = clamp(virtualX + step, 0, window.innerWidth);
+    if(e.key === 'ArrowRight') virtualX = clamp(virtualX - step, 0, window.innerWidth);
+    if(e.key === 'ArrowUp') virtualY = clamp(virtualY + step, 0, window.innerHeight);
+    if(e.key === 'ArrowDown') virtualY = clamp(virtualY - step, 0, window.innerHeight);
+    setPos(virtualX, virtualY);
+  });
+
+  window.addEventListener('resize', () => {
+    const rect = cursor.getBoundingClientRect();
+    const x = clamp(rect.left, 0, window.innerWidth);
+    const y = clamp(rect.top, 0, window.innerHeight);
+    setPos(x, y);
+  });
+
+  // Initialize at center
+  setPos(window.innerWidth/2, window.innerHeight/2);
+
+  // Escape restores default cursor and hides mirror
+  window.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') {
+      cursor.style.display = 'none';
+      document.body.style.cursor = 'default';
+    }
+  });
+})();
+</script>
+</body>
+</html>

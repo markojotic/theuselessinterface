@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Infinite Scroll — The Useless Interface by Marko Jotic</title>
+<style>
+  :root {
+    --ink: #111;
+    --bg: #fff;
+    --blue: #2841DF;
+  }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.7;
+  }
+  .hint {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    opacity: .8;
+    font-size: 14px;
+    z-index: 10;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  .hint a { color: var(--blue); font-weight: 600; text-decoration: none; }
+  .hint a:hover { text-decoration: underline; }
+  .container {
+    max-width: 760px;
+    margin: 80px auto;
+    padding: 0 20px;
+  }
+  h1, h2 {
+    font-family: 'Georgia', serif;
+    line-height: 1.2;
+    margin-bottom: 0.4em;
+  }
+  h1 {
+    font-size: 2.2em;
+    margin-top: 0;
+    text-align: center;
+  }
+  h2 {
+    margin-top: 2em;
+    font-size: 1.4em;
+    font-style: italic;
+  }
+  p {
+    margin-bottom: 1.3em;
+    text-align: justify;
+  }
+</style>
+</head>
+<body>
+  <div class="hint">Find more at <a href="https://theuselessinterface.com" target="_blank">The Useless Interface</a></div>
+
+  <div id="scrollContent" class="container">
+    <h1>The Endless Chronicle of Computing</h1>
+
+    <p>The story of computing begins long before the silicon chip, in dusty libraries and on wooden desks. Abacuses clicked, gears turned, and minds wrestled with abstraction. When Ada Lovelace wrote about the potential of Charles Babbage’s Analytical Engine, she was not just describing machinery — she was envisioning imagination given mechanical form.</p>
+
+    <p>From vacuum tubes that hummed with heat to transistors small enough to rest on a fingertip, the pace of progress accelerated beyond comprehension. Each generation stood on the shoulders of the last, not always seeing further, but always building upward. ENIAC’s glowing panels became the whisper-quiet circuits of microprocessors, then the invisible cloud of modern computation.</p>
+
+    <h2>The Hum of Logic</h2>
+    <p>In the cold logic of binary — ones and zeros, yes and no — humanity found a mirror. The computer became a storyteller of precision, incapable of emotion yet built entirely upon human need. Programmers spoke to machines in strange incantations, and the machines responded, sometimes faithfully, sometimes rebelliously.</p>
+
+    <p>By the 1980s, the hum of fans and the soft glow of CRT monitors became the soundscape of modern ambition. In offices, bedrooms, and basements, the same question echoed: what can this thing do? The answer, inevitably, was “more than yesterday.”</p>
+
+    <h2>The Networked Dream</h2>
+    <p>When computers began to talk to each other, a new mythology was born. The internet turned cables into veins, carrying thoughts faster than they could be spoken. The distance between continents collapsed into milliseconds. Every click, a conversation; every file, a fragment of someone’s mind.</p>
+
+    <p>We became archivists of ourselves. Our histories — once written in journals and kept in boxes — now float, duplicated endlessly, unforgotten but rarely revisited. The web promised freedom, and perhaps it delivered it, but not without a cost. Attention became the new currency, and silence became rare.</p>
+
+    <h2>The Mirror and the Loop</h2>
+    <p>Today, the computer no longer sits on our desks. It stares back from our pockets, counting our steps, finishing our sentences, learning our preferences. It is the mirror that looks back with perfect recall. And as we scroll — endlessly, compulsively — we complete the circuit that began with Lovelace’s dream.</p>
+
+    <p>The history of computing is, at its heart, the history of repetition. Loops upon loops. Data overwritten, reformatted, reimagined. The infinite scroll is not a design pattern — it’s a philosophy. To read forever, never arriving, never done.</p>
+
+    <h2>Between Code and Consciousness</h2>
+    <p>As machines learned to predict, we began to forget how to wonder. Algorithms shaped our curiosity, choosing what we see, what we buy, and even who we love. But somewhere between lines of code and circuits of silicon, the human persists — asking why, instead of just how.</p>
+
+    <p>Perhaps that is the true loop: we invent the computer to understand ourselves, and in doing so, we become a reflection of the systems we create. The scroll continues, the story deepens, and the page never truly ends.</p>
+
+    <p>Behind every glowing screen lies a whisper of the past: a punched card, a clacking relay, a spark of electricity. All leading to this — a moment of scrolling, a heartbeat extended across time and pixels. And still, we scroll.</p>
+  </div>
+
+<script>
+(() => {
+  const scrollContent = document.getElementById('scrollContent');
+
+  // Duplicate content for seamless loop
+  const clone = scrollContent.cloneNode(true);
+  document.body.appendChild(clone);
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight;
+    const winHeight = window.innerHeight;
+
+    // If near the end, jump back to top seamlessly
+    if (scrollTop + winHeight >= docHeight - 10) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  });
+})();
+</script>
+</body>
+</html>
