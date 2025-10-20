@@ -24,6 +24,7 @@
       box-shadow: 2px 2px 0 #2841DF;
       background: #fff;
       z-index: 999;
+      order: 2; /* desktop – desno */
     }
 
     .useless-interface .logo {
@@ -41,7 +42,16 @@
       font-size: 13px;
       color: #000;
       line-height: 1.5;
-      margin: 20;
+    }
+
+    .useless-interface p a {
+      text-decoration: none; 
+      color: #2841DF;
+      font-weight: 500;
+    }
+
+    .useless-interface p a:hover {
+      text-decoration: underline;
     }
 
     .posts {
@@ -50,6 +60,7 @@
       gap: 40px;
       padding: 40px;
       max-width: 600px;
+      order: 1; /* desktop – lijevo */
     }
 
     .post {
@@ -91,12 +102,33 @@
     .post a:hover {
       text-decoration: underline;
     }
+
+    /* 📱 Mobilna verzija (ispod 768px) */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .useless-interface {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: auto;
+        margin: 20px;
+        box-shadow: none;
+        order: 1; /* mobilni – ide na vrh */
+      }
+
+      .posts {
+        padding: 20px;
+        order: 2; /* mobilni – ide ispod */
+      }
+    }
   </style>
 </head>
 <body>
 
   <div class="posts">
-
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+1" alt="Post Image">
       <div class="date">Oct 19, 2025</div>
@@ -104,7 +136,6 @@
       <div class="description">This is a sample description for post number 1. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+2" alt="Post Image">
       <div class="date">Oct 18, 2025</div>
@@ -112,7 +143,6 @@
       <div class="description">This is a sample description for post number 2. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+3" alt="Post Image">
       <div class="date">Oct 17, 2025</div>
@@ -120,7 +150,6 @@
       <div class="description">This is a sample description for post number 3. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+4" alt="Post Image">
       <div class="date">Oct 16, 2025</div>
@@ -128,7 +157,6 @@
       <div class="description">This is a sample description for post number 4. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+5" alt="Post Image">
       <div class="date">Oct 15, 2025</div>
@@ -136,7 +164,6 @@
       <div class="description">This is a sample description for post number 5. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+6" alt="Post Image">
       <div class="date">Oct 14, 2025</div>
@@ -144,7 +171,6 @@
       <div class="description">This is a sample description for post number 6. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+7" alt="Post Image">
       <div class="date">Oct 13, 2025</div>
@@ -152,7 +178,6 @@
       <div class="description">This is a sample description for post number 7. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+8" alt="Post Image">
       <div class="date">Oct 12, 2025</div>
@@ -160,7 +185,6 @@
       <div class="description">This is a sample description for post number 8. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+9" alt="Post Image">
       <div class="date">Oct 11, 2025</div>
@@ -168,7 +192,6 @@
       <div class="description">This is a sample description for post number 9. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
     <div class="post">
       <img src="https://placehold.co/600x300?text=Post+10" alt="Post Image">
       <div class="date">Oct 10, 2025</div>
@@ -176,7 +199,6 @@
       <div class="description">This is a sample description for post number 10. It demonstrates how multiple posts stack along the left side of the page.</div>
       <a href="#">View demo →</a>
     </div>
-    
   </div>
 
   <div class="useless-interface">
@@ -186,7 +208,8 @@
     <div class="divider"></div>
     <p>Hi, I'm Marko — welcome to a gallery of digital nonsense, a collection of experiments born from curiosity and AI tools.</p>
     <p>When I’m not exploring the useless, I’m designing the useful.</p>
-    <p><a href="#">My portolio →</a></p>
+    <p><a href="#">My portfolio →</a></p>
+    <p><a href="#">Mail me →</a></p>
   </div>
 
 </body>
