@@ -42,6 +42,7 @@
       font-size: 13px;
       color: #000;
       line-height: 1.5;
+      text-align: justify;
     }
 
     .useless-interface p a {
@@ -73,7 +74,7 @@
 
     .post img {
       width: 100%;
-      border-radius: 6px;
+      border-radius: 0px;
     }
 
     .post .date {
@@ -124,80 +125,91 @@
         order: 2; /* mobilni – ide ispod */
       }
     }
+    .post-image {
+    border: 1px solid #2841DF;
+    border-radius: 0px;
+    }
+    .post-video {
+    border: 1px solid #2841DF;
+    border-radius: 0px;
+    }
+
   </style>
 </head>
 <body>
 
   <div class="posts">
     <div class="post">
-      <img src="turnoffallnotifications.png" alt="Post Image">
+      <img src="turnoffallnotifications.png" alt="Post Image" class="post-image">
       <div class="date">Oct 21, 2025</div>
-      <div class="title">[001] Turn off all notifications</div>
-      <div class="description">A quiet joke about how technology communicates, or how some designers imagine it should communicate. Even when you try to turn everything off, the system has to have the last word.</div>
+      <div class="title">[010] Turn off all notifications</div>
+      <div class="description">Even when you try to turn everything off, the system has to have the last word.</div>
       <a href="turn-off-notifications.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
     <div class="post">
-      <img src="https://placehold.co/600x300?text=Post+2" alt="Post Image">
-      <div class="date">Oct 18, 2025</div>
-      <div class="title">Useless Post 2</div>
-      <div class="description">This is a sample description for post number 2. It demonstrates how multiple posts stack along the left side of the page.</div>
-      <a href="#">View demo →</a>
+      <img src="procrastination-timer.png" alt="Post Image" class="post-image">
+      <div class="date">Oct 20, 2025</div>
+      <div class="title">[009] Procrastination Timer</div>
+      <div class="description">If you’ve come this far already, you might as well waste a minute on the procrastination timer.</div>
+      <a href="procrastination-timer.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
     <div class="post">
-      <img src="https://placehold.co/600x300?text=Post+3" alt="Post Image">
+      <video  class="post-video" autoplay loop muted playsinline>
+        <source src="mirror-cursor.mp4" type="video/mp4">
+      </video>
       <div class="date">Oct 17, 2025</div>
-      <div class="title">Useless Post 3</div>
-      <div class="description">This is a sample description for post number 3. It demonstrates how multiple posts stack along the left side of the page.</div>
-      <a href="#">View demo →</a>
+      <div class="title">[008] Mirror Cursor</div>
+      <div class="description">There’s no strong reason behind this, it just feels interesting and useless.</div>
+      <a href="mirror-cursor.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
     <div class="post">
-      <img src="https://placehold.co/600x300?text=Post+4" alt="Post Image">
+      <img src="infinite-scroll.png" alt="Post Image" class="post-image">
       <div class="date">Oct 16, 2025</div>
-      <div class="title">Useless Post 4</div>
-      <div class="description">This is a sample description for post number 4. It demonstrates how multiple posts stack along the left side of the page.</div>
-      <a href="#">View demo →</a>
+      <div class="title">[007] Infinite Scroll</div>
+      <div class="description">Those apps like Instagram and X never run out of content. So why should my website?</div>
+      <a href="infinite-scroll.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
     <div class="post">
-      <img src="https://placehold.co/600x300?text=Post+5" alt="Post Image">
+      <img src="button-loop.jpg" alt="Post Image" class="post-image">
       <div class="date">Oct 15, 2025</div>
-      <div class="title">Useless Post 5</div>
-      <div class="description">This is a sample description for post number 5. It demonstrates how multiple posts stack along the left side of the page.</div>
-      <a href="#">View demo →</a>
+      <div class="title">[006] Button Loop</div>
+      <div class="description">If you don’t have space for all the buttons you need, just loop them.</div>
+      <a href="button-loop.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
     <div class="post">
-      <img src="https://placehold.co/600x300?text=Post+6" alt="Post Image">
+      <img src="mirror-browser.jpg" alt="Post Image" class="post-image">
       <div class="date">Oct 14, 2025</div>
-      <div class="title">Useless Post 6</div>
+      <div class="title">[005] Mirror Browser</div>
       <div class="description">This is a sample description for post number 6. It demonstrates how multiple posts stack along the left side of the page.</div>
-      <a href="#">View demo →</a>
+      <a href="mirror-browser.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
     <div class="post">
-      <img src="https://placehold.co/600x300?text=Post+7" alt="Post Image">
+      <img src="human-captcha.jpg" alt="Post Image" class="post-image">
       <div class="date">Oct 13, 2025</div>
-      <div class="title">Useless Post 7</div>
-      <div class="description">This is a sample description for post number 7. It demonstrates how multiple posts stack along the left side of the page.</div>
-      <a href="#">View demo →</a>
+      <div class="title">[004] Human Captcha</div>
+      <div class="description">A robot can figure out where the stairs are in a photo, but there’s something it can’t do.</div>
+      <a href="human-captcha.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
     <div class="post">
-      <img src="https://placehold.co/600x300?text=Post+8" alt="Post Image">
+      <img src="credit-card.jpg" alt="Post Image" class="post-image">
       <div class="date">Oct 12, 2025</div>
-      <div class="title">Useless Post 8</div>
-      <div class="description">This is a sample description for post number 8. It demonstrates how multiple posts stack along the left side of the page.</div>
-      <a href="#">View demo →</a>
+      <div class="title">[003] Credit Card</div>
+      <div class="description">How can we stop people from buying pointless stuff online? This form is the answer.</div>
+      <a href="credit-card.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
     <div class="post">
-      <img src="https://placehold.co/600x300?text=Post+9" alt="Post Image">
+      <img src="unscrollable-scroll.jpg" alt="Post Image" class="post-image">
       <div class="date">Oct 11, 2025</div>
-      <div class="title">Useless Post 9</div>
-      <div class="description">This is a sample description for post number 9. It demonstrates how multiple posts stack along the left side of the page.</div>
-      <a href="#">View demo →</a>
+      <div class="title">[002] Unscrollable Scroll</div>
+      <div class="description">Moving ideas from the offline world into online. What’s stopping people?</div>
+      <a href="unscrollable-scroll.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
     <div class="post">
-      <img src="https://placehold.co/600x300?text=Post+10" alt="Post Image">
+      <img src="unsubscribe.jpg" alt="Post Image" class="post-image">
       <div class="date">Oct 10, 2025</div>
-      <div class="title">Useless Post 10</div>
-      <div class="description">This is a sample description for post number 10. It demonstrates how multiple posts stack along the left side of the page.</div>
-      <a href="#">View demo →</a>
+      <div class="title">[001] Unsubscribe Button</div>
+      <div class="description">If you’re already keeping the unsubscribe button out of sight, here’s a way to make the user experience even more entertaining.</div>
+      <a href="unsubscribe.html" target="_blank" rel="noopener noreferrer">View demo →</a>
     </div>
   </div>
 
@@ -208,7 +220,7 @@
     <div class="divider"></div>
     <p>Hi, I'm Marko — welcome to a gallery of digital nonsense, a collection of experiments born from curiosity and AI tools.</p>
     <p>When I’m not exploring the useless, I’m designing the useful.</p>
-    <p><a href="#">My portfolio →</a></p>
+    <p><a href="#">Portfolio →</a></p>
     <p><a href="#">Mail me →</a></p>
   </div>
 
